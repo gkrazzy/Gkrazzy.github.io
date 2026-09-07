@@ -282,7 +282,64 @@ footer{
 
 <script>
 
-function createVideo(){
+async function createVideo() {
+  const story = document.getElementById("story").value;
+  const language = document.getElementById("language").value;
+  const format = document.getElementById("format").value;
+  const result = document.getElementById("result");
+
+  if (!story.trim()) {
+    alert("Please write your story first.");
+    return;
+  }
+
+  result.style.display = "block";
+  result.innerHTML = "⏳ CreateKaro AI is creating your scenes...";
+
+  try {
+    const response = await fetch("https://createkaro-api.gkrazzy.workers.dev/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        story: story,
+        language: language,
+        format: format
+      })
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.message || "Something went wrong.");
+    }
+
+    result.innerHTML = `
+      <h3>🎬 Your Scenes</h3>
+
+      ${data.scenes.map(scene => `
+        <div style="
+          margin-top:15px;
+          padding:15px;
+          background:#0b0b0f;
+          border-radius:10px;
+        ">
+          <strong>Scene ${scene.scene}: ${scene.title}</strong>
+          <p style="color:#aaa;margin-top:8px;">
+            ${scene.description}
+          </p>
+          <small>${scene.duration} seconds</small>
+        </div>
+      `).join("")}
+    `;
+
+  } catch (error) {
+    console.error(error);
+    result.innerHTML =
+      "❌ Unable to connect to CreateKaro AI. Please try again.";
+  }
+}{
 
   const story = document.getElementById("story").value;
   const language = document.getElementById("language").value;
