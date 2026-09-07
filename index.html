@@ -1,368 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CreateKaro AI</title>
+  <title>CreateKaro AI - AI Video Generator</title>
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body{
-  background:#08080c;
-  color:white;
-}
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #08080b;
+      color: #ffffff;
+      min-height: 100vh;
+    }
 
-nav{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 7%;
-  border-bottom:1px solid #222;
-}
+    header {
+      width: 100%;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #222228;
+      background: #09090c;
+    }
 
-.logo{
-  font-size:25px;
-  font-weight:bold;
-}
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
 
-.logo span{
-  color:#8b5cf6;
-}
+    .logo span {
+      color: #8b5cf6;
+    }
 
-.hero{
-  text-align:center;
-  padding:70px 20px 45px;
-}
+    .header-btn {
+      background: transparent;
+      border: 1px solid #33333c;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-.badge{
-  display:inline-block;
-  border:1px solid #333;
-  padding:8px 15px;
-  border-radius:30px;
-  color:#c4b5fd;
-  margin-bottom:20px;
-}
+    .hero {
+      text-align: center;
+      padding: 80px 20px 50px;
+      max-width: 900px;
+      margin: auto;
+    }
 
-h1{
-  font-size:50px;
-  margin-bottom:15px;
-}
+    .badge {
+      display: inline-block;
+      padding: 8px 15px;
+      border: 1px solid #34343d;
+      border-radius: 30px;
+      color: #b9b9c5;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
 
-h1 span{
-  color:#8b5cf6;
-}
+    h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 25px;
+    }
 
-.hero p{
-  color:#999;
-  max-width:650px;
-  margin:auto;
-  line-height:1.6;
-}
+    h1 span {
+      color: #8b5cf6;
+    }
 
-.creator{
-  max-width:850px;
-  margin:30px auto 80px;
-  padding:25px;
-  background:#121219;
-  border:1px solid #292933;
-  border-radius:18px;
-}
+    .hero p {
+      color: #a4a4af;
+      font-size: 19px;
+      line-height: 1.6;
+      max-width: 680px;
+      margin: auto;
+    }
 
-label{
-  display:block;
-  margin-bottom:10px;
-  font-weight:bold;
-}
+    .creator {
+      width: min(900px, 92%);
+      margin: 30px auto 80px;
+      background: #111116;
+      border: 1px solid #282830;
+      border-radius: 18px;
+      padding: 28px;
+    }
 
-textarea,select{
-  width:100%;
-  background:#09090d;
-  color:white;
-  border:1px solid #333;
-  border-radius:10px;
-  padding:15px;
-  margin-bottom:20px;
-  font-size:16px;
-}
+    .creator h2 {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
 
-textarea{
-  height:180px;
-  resize:none;
-}
+    .creator-subtitle {
+      color: #8f8f9b;
+      margin-bottom: 22px;
+    }
 
-.options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      resize: vertical;
+      background: #09090d;
+      border: 1px solid #303039;
+      border-radius: 12px;
+      padding: 18px;
+      color: white;
+      font-size: 16px;
+      outline: none;
+      line-height: 1.5;
+    }
 
-button{
-  width:100%;
-  border:none;
-  padding:16px;
-  border-radius:10px;
-  background:#8b5cf6;
-  color:white;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-}
+    textarea:focus {
+      border-color: #8b5cf6;
+    }
 
-button:hover{
-  opacity:.85;
-}
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 18px;
+    }
 
-#result{
-  display:none;
-  margin-top:25px;
-  padding:20px;
-  background:#191922;
-  border-radius:12px;
-  color:#c4b5fd;
-}
+    .option label {
+      display: block;
+      color: #aaaab5;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
 
-.features{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 9px;
+      background: #09090d;
+      border: 1px solid #303039;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
 
-.features h2{
-  text-align:center;
-  margin-bottom:30px;
-}
+    .create-btn {
+      width: 100%;
+      margin-top: 22px;
+      padding: 17px;
+      border: none;
+      border-radius: 10px;
+      background: #8b5cf6;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:18px;
-}
+    .create-btn:hover {
+      background: #7c3aed;
+      transform: translateY(-1px);
+    }
 
-.card{
-  padding:25px;
-  background:#121219;
-  border:1px solid #25252d;
-  border-radius:15px;
-}
+    .create-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
 
-.icon{
-  font-size:30px;
-  margin-bottom:15px;
-}
+    #result {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      background: #09090d;
+      border: 1px solid #282830;
+      border-radius: 12px;
+    }
 
-.card p{
-  color:#999;
-  line-height:1.5;
-  margin-top:8px;
-}
+    .scene {
+      margin-top: 15px;
+      padding: 16px;
+      background: #111116;
+      border: 1px solid #292932;
+      border-radius: 10px;
+    }
 
-footer{
-  text-align:center;
-  color:#666;
-  padding:50px 20px;
-}
+    .scene-title {
+      font-weight: bold;
+      font-size: 17px;
+    }
 
-@media(max-width:600px){
-  h1{
-    font-size:38px;
-  }
+    .scene-description {
+      color: #aaaab5;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
 
-  .options{
-    grid-template-columns:1fr;
-  }
-}
-</style>
+    .scene-duration {
+      display: inline-block;
+      color: #8b5cf6;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .features {
+      width: min(1100px, 92%);
+      margin: 0 auto 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: #111116;
+      border: 1px solid #282830;
+      padding: 25px;
+      border-radius: 15px;
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .feature h3 {
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      color: #92929d;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    footer {
+      border-top: 1px solid #222228;
+      text-align: center;
+      padding: 30px;
+      color: #70707b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 800px) {
+      .features {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 18px 5%;
+      }
+
+      .hero {
+        padding-top: 55px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .creator {
+        padding: 20px;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<nav>
-  <div class="logo">CreateKaro<span>AI</span></div>
-</nav>
-
-<section class="hero">
-
-  <div class="badge">✨ AI Video Creator</div>
-
-  <h1>
-    Turn Your Story Into<br>
-    <span>A Video</span>
-  </h1>
-
-  <p>
-    Write your story and CreateKaro AI will help transform
-    your idea into scenes ready for video creation.
-  </p>
-
-</section>
-
-<section class="creator">
-
-  <label>✍️ Tell us your story</label>
-
-  <textarea id="story"
-  placeholder="Example: Three friends enter an abandoned hostel at midnight and discover a mysterious room number 13..."></textarea>
-
-  <div class="options">
-
-    <div>
-      <label>Language</label>
-
-      <select id="language">
-        <option>English</option>
-        <option>Hindi</option>
-        <option>Hinglish</option>
-      </select>
+  <header>
+    <div class="logo">
+      CreateKaro<span>AI</span>
     </div>
 
-    <div>
-      <label>Video Format</label>
+    <button class="header-btn" onclick="scrollToCreator()">
+      Create Video
+    </button>
+  </header>
 
-      <select id="format">
-        <option>9:16 — Shorts / Reels</option>
-        <option>16:9 — YouTube</option>
-        <option>1:1 — Social Media</option>
-      </select>
+
+  <section class="hero">
+
+    <div class="badge">
+      ✨ AI Video Creation Made Simple
     </div>
 
-  </div>
+    <h1>
+      Your Story.<br>
+      Your <span>Video.</span><br>
+      Your AI.
+    </h1>
 
-  <button onclick="createVideo()">
-    🚀 Create My Video
-  </button>
+    <p>
+      Turn your story into scenes and videos with CreateKaro AI.
+      Built for creators who want powerful AI video creation without
+      complicated tools.
+    </p>
 
-  <div id="result"></div>
+  </section>
 
-</section>
 
-<section class="features">
+  <section class="creator" id="creator">
 
-  <h2>What CreateKaro AI Will Do</h2>
+    <h2>🎬 Create Your Video</h2>
 
-  <div class="cards">
+    <p class="creator-subtitle">
+      Write your story below and let CreateKaro AI break it into scenes.
+    </p>
 
-    <div class="card">
-      <div class="icon">🧠</div>
+    <textarea
+      id="story"
+      placeholder="Write your story here...
+
+Example:
+Three friends enter an abandoned hostel at midnight. They discover Room No. 13 and strange things begin to happen..."
+    ></textarea>
+
+
+    <div class="options">
+
+      <div class="option">
+        <label for="language">Language</label>
+
+        <select id="language">
+          <option value="English">English</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Hinglish">Hinglish</option>
+        </select>
+      </div>
+
+
+      <div class="option">
+        <label for="format">Video Format</label>
+
+        <select id="format">
+          <option value="9:16">9:16 - Shorts / Reels</option>
+          <option value="16:9">16:9 - YouTube</option>
+          <option value="1:1">1:1 - Square</option>
+        </select>
+      </div>
+
+    </div>
+
+
+    <button
+      class="create-btn"
+      id="createButton"
+      type="button"
+      onclick="createVideo()"
+    >
+      🚀 Create My Video
+    </button>
+
+
+    <div id="result"></div>
+
+  </section>
+
+
+  <section class="features">
+
+    <div class="feature">
+      <div class="feature-icon">📝</div>
       <h3>Story → Scenes</h3>
-      <p>Break your story into structured video scenes.</p>
+      <p>
+        Turn your story into structured video scenes automatically.
+      </p>
     </div>
 
-    <div class="card">
-      <div class="icon">🎭</div>
+
+    <div class="feature">
+      <div class="feature-icon">👤</div>
       <h3>Character Consistency</h3>
-      <p>Keep your characters consistent across scenes.</p>
+      <p>
+        Keep your characters consistent across different scenes.
+      </p>
     </div>
 
-    <div class="card">
-      <div class="icon">🎬</div>
+
+    <div class="feature">
+      <div class="feature-icon">🎥</div>
       <h3>AI Video</h3>
-      <p>Generate video clips from your scenes.</p>
+      <p>
+        Generate cinematic video scenes from your story.
+      </p>
     </div>
 
-    <div class="card">
-      <div class="icon">🎙️</div>
+
+    <div class="feature">
+      <div class="feature-icon">🎙️</div>
       <h3>AI Voice</h3>
-      <p>Add narration and voiceovers to your videos.</p>
+      <p>
+        Add narration and character voices to your videos.
+      </p>
     </div>
 
-  </div>
+  </section>
 
-</section>
 
-<footer>
-  © 2026 CreateKaro AI — Your Story. Your Video. Your AI.
-</footer>
+  <footer>
+    © 2026 CreateKaro AI — Your Story. Your Video. Your AI.
+  </footer>
 
-<script>
 
-async function createVideo() {
-  const story = document.getElementById("story").value;
-  const language = document.getElementById("language").value;
-  const format = document.getElementById("format").value;
-  const result = document.getElementById("result");
+  <script>
 
-  if (!story.trim()) {
-    alert("Please write your story first.");
-    return;
-  }
+    const WORKER_URL =
+      "https://createkaro-api.gkrazzy.workers.dev/";
 
-  result.style.display = "block";
-  result.innerHTML = "⏳ CreateKaro AI is creating your scenes...";
 
-  try {
-    const response = await fetch("https://createkaro-api.gkrazzy.workers.dev/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        story: story,
-        language: language,
-        format: format
-      })
-    });
-
-    const data = await response.json();
-
-    if (!data.success) {
-      throw new Error(data.message || "Something went wrong.");
+    function scrollToCreator() {
+      document
+        .getElementById("creator")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
     }
 
-    result.innerHTML = `
-      <h3>🎬 Your Scenes</h3>
 
-      ${data.scenes.map(scene => `
-        <div style="
-          margin-top:15px;
-          padding:15px;
-          background:#0b0b0f;
-          border-radius:10px;
-        ">
-          <strong>Scene ${scene.scene}: ${scene.title}</strong>
-          <p style="color:#aaa;margin-top:8px;">
-            ${scene.description}
+    async function createVideo() {
+
+      const storyElement =
+        document.getElementById("story");
+
+      const languageElement =
+        document.getElementById("language");
+
+      const formatElement =
+        document.getElementById("format");
+
+      const resultElement =
+        document.getElementById("result");
+
+      const buttonElement =
+        document.getElementById("createButton");
+
+
+      const story =
+        storyElement.value.trim();
+
+      const language =
+        languageElement.value;
+
+      const format =
+        formatElement.value;
+
+
+      if (!story) {
+
+        alert(
+          "Please write your story first."
+        );
+
+        storyElement.focus();
+
+        return;
+      }
+
+
+      resultElement.style.display =
+        "block";
+
+      resultElement.innerHTML =
+        "<h3>⏳ CreateKaro AI is creating your scenes...</h3>";
+
+
+      buttonElement.disabled = true;
+
+      buttonElement.innerText =
+        "⏳ Creating Scenes...";
+
+
+      try {
+
+        const response =
+          await fetch(
+            WORKER_URL,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body: JSON.stringify({
+                story: story,
+                language: language,
+                format: format
+              })
+            }
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "Server returned " +
+            response.status
+          );
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        if (!data.success) {
+
+          throw new Error(
+            data.message ||
+            "Something went wrong."
+          );
+
+        }
+
+
+        let scenesHTML = "";
+
+
+        data.scenes.forEach(
+          function(scene) {
+
+            scenesHTML += `
+
+              <div class="scene">
+
+                <div class="scene-title">
+                  Scene ${scene.scene}:
+                  ${scene.title}
+                </div>
+
+                <div class="scene-description">
+                  ${scene.description}
+                </div>
+
+                <span class="scene-duration">
+                  ⏱ ${scene.duration} seconds
+                </span>
+
+              </div>
+
+            `;
+
+          }
+        );
+
+
+        resultElement.innerHTML = `
+
+          <h3>🎬 Your Scenes Are Ready</h3>
+
+          <p style="
+            color:#888894;
+            margin-top:8px;
+          ">
+            Language: ${data.language}
+            &nbsp; | &nbsp;
+            Format: ${data.format}
           </p>
-          <small>${scene.duration} seconds</small>
-        </div>
-      `).join("")}
-    `;
 
-  } catch (error) {
-    console.error(error);
-    result.innerHTML =
-      "❌ Unable to connect to CreateKaro AI. Please try again.";
-  }
-}
-}{
+          ${scenesHTML}
 
-  const story = document.getElementById("story").value;
-  const language = document.getElementById("language").value;
-  const format = document.getElementById("format").value;
-  const result = document.getElementById("result");
+        `;
 
-  if(story.trim() === ""){
-    alert("Please write your story first.");
-    return;
-  }
 
-  result.style.display="block";
+      } catch (error) {
 
-  result.innerHTML =
-  "✨ Your video project has been created!<br><br>" +
-  "Language: " + language + "<br>" +
-  "Format: " + format + "<br><br>" +
-  "🧠 AI scene generation will be connected next.";
+        console.error(
+          "CreateKaro Error:",
+          error
+        );
 
-}
 
-</script>
+        resultElement.innerHTML = `
+
+          <h3>❌ Something went wrong</h3>
+
+          <p style="
+            color:#9999a5;
+            margin-top:10px;
+          ">
+            Unable to connect to the CreateKaro AI
+            server. Please try again.
+          </p>
+
+        `;
+
+      } finally {
+
+        buttonElement.disabled = false;
+
+        buttonElement.innerText =
+          "🚀 Create My Video";
+
+      }
+
+    }
+
+  </script>
 
 </body>
 </html>
