@@ -1,225 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CreateKaro AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<title>CreateKaro AI</title>
 
-    body {
-      background: #0b0b0f;
-      color: white;
-      min-height: 100vh;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 22px 7%;
-      border-bottom: 1px solid #222;
-    }
+body{
+  background:#08080c;
+  color:white;
+}
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-    }
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 7%;
+  border-bottom:1px solid #222;
+}
 
-    .logo span {
-      color: #8b5cf6;
-    }
+.logo{
+  font-size:25px;
+  font-weight:bold;
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 25px;
-    }
+.logo span{
+  color:#8b5cf6;
+}
 
-    .hero {
-      text-align: center;
-      padding: 100px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
+.hero{
+  text-align:center;
+  padding:70px 20px 45px;
+}
 
-    .badge {
-      display: inline-block;
-      padding: 8px 16px;
-      border: 1px solid #333;
-      border-radius: 30px;
-      color: #c4b5fd;
-      margin-bottom: 25px;
-    }
+.badge{
+  display:inline-block;
+  border:1px solid #333;
+  padding:8px 15px;
+  border-radius:30px;
+  color:#c4b5fd;
+  margin-bottom:20px;
+}
 
-    h1 {
-      font-size: clamp(45px, 8vw, 82px);
-      line-height: 1;
-      margin-bottom: 25px;
-    }
+h1{
+  font-size:50px;
+  margin-bottom:15px;
+}
 
-    h1 span {
-      color: #8b5cf6;
-    }
+h1 span{
+  color:#8b5cf6;
+}
 
-    .hero p {
-      color: #aaa;
-      font-size: 19px;
-      line-height: 1.6;
-      max-width: 650px;
-      margin: auto;
-    }
+.hero p{
+  color:#999;
+  max-width:650px;
+  margin:auto;
+  line-height:1.6;
+}
 
-    .button {
-      display: inline-block;
-      margin-top: 35px;
-      padding: 16px 30px;
-      background: #8b5cf6;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-      font-size: 17px;
-    }
+.creator{
+  max-width:850px;
+  margin:30px auto 80px;
+  padding:25px;
+  background:#121219;
+  border:1px solid #292933;
+  border-radius:18px;
+}
 
-    .button:hover {
-      opacity: 0.85;
-    }
+label{
+  display:block;
+  margin-bottom:10px;
+  font-weight:bold;
+}
 
-    .features {
-      padding: 70px 7%;
-      max-width: 1200px;
-      margin: auto;
-    }
+textarea,select{
+  width:100%;
+  background:#09090d;
+  color:white;
+  border:1px solid #333;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:20px;
+  font-size:16px;
+}
 
-    .features h2 {
-      text-align: center;
-      font-size: 38px;
-      margin-bottom: 45px;
-    }
+textarea{
+  height:180px;
+  resize:none;
+}
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
 
-    .card {
-      background: #15151c;
-      border: 1px solid #25252d;
-      border-radius: 15px;
-      padding: 28px;
-    }
+button{
+  width:100%;
+  border:none;
+  padding:16px;
+  border-radius:10px;
+  background:#8b5cf6;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    .card .icon {
-      font-size: 32px;
-      margin-bottom: 18px;
-    }
+button:hover{
+  opacity:.85;
+}
 
-    .card h3 {
-      margin-bottom: 10px;
-    }
+#result{
+  display:none;
+  margin-top:25px;
+  padding:20px;
+  background:#191922;
+  border-radius:12px;
+  color:#c4b5fd;
+}
 
-    .card p {
-      color: #999;
-      line-height: 1.5;
-    }
+.features{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
 
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #777;
-      border-top: 1px solid #222;
-      margin-top: 50px;
-    }
-  </style>
+.features h2{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+
+.card{
+  padding:25px;
+  background:#121219;
+  border:1px solid #25252d;
+  border-radius:15px;
+}
+
+.icon{
+  font-size:30px;
+  margin-bottom:15px;
+}
+
+.card p{
+  color:#999;
+  line-height:1.5;
+  margin-top:8px;
+}
+
+footer{
+  text-align:center;
+  color:#666;
+  padding:50px 20px;
+}
+
+@media(max-width:600px){
+  h1{
+    font-size:38px;
+  }
+
+  .options{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <nav>
-    <div class="logo">CreateKaro<span>AI</span></div>
+<nav>
+  <div class="logo">CreateKaro<span>AI</span></div>
+</nav>
+
+<section class="hero">
+
+  <div class="badge">✨ AI Video Creator</div>
+
+  <h1>
+    Turn Your Story Into<br>
+    <span>A Video</span>
+  </h1>
+
+  <p>
+    Write your story and CreateKaro AI will help transform
+    your idea into scenes ready for video creation.
+  </p>
+
+</section>
+
+<section class="creator">
+
+  <label>✍️ Tell us your story</label>
+
+  <textarea id="story"
+  placeholder="Example: Three friends enter an abandoned hostel at midnight and discover a mysterious room number 13..."></textarea>
+
+  <div class="options">
 
     <div>
-      <a href="#">Home</a>
-      <a href="#features">Features</a>
-    </div>
-  </nav>
+      <label>Language</label>
 
-  <section class="hero">
-
-    <div class="badge">✨ AI Video Creation Made Simple</div>
-
-    <h1>
-      Your Story.<br>
-      <span>Your Video.</span>
-    </h1>
-
-    <p>
-      Turn your ideas and stories into engaging videos with AI.
-      Create scenes, characters, voices and complete videos —
-      without expensive software.
-    </p>
-
-    <a href="#" class="button">Start Creating Free →</a>
-
-  </section>
-
-  <section class="features" id="features">
-
-    <h2>Everything You Need</h2>
-
-    <div class="cards">
-
-      <div class="card">
-        <div class="icon">✍️</div>
-        <h3>Story to Video</h3>
-        <p>Turn your story or idea into a complete video plan.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🎭</div>
-        <h3>Character Studio</h3>
-        <p>Create characters and keep their appearance consistent.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🎬</div>
-        <h3>AI Scenes</h3>
-        <p>Create individual scenes and build your video step by step.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🎙️</div>
-        <h3>AI Voice</h3>
-        <p>Add narration and voiceovers to your videos.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">🎵</div>
-        <h3>Music & SFX</h3>
-        <p>Add background music and sound effects.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">📦</div>
-        <h3>Export Video</h3>
-        <p>Combine your scenes and create your final video.</p>
-      </div>
-
+      <select id="language">
+        <option>English</option>
+        <option>Hindi</option>
+        <option>Hinglish</option>
+      </select>
     </div>
 
-  </section>
+    <div>
+      <label>Video Format</label>
 
-  <footer>
-    © 2026 CreateKaro AI — Your Story. Your Video. Your AI.
-  </footer>
+      <select id="format">
+        <option>9:16 — Shorts / Reels</option>
+        <option>16:9 — YouTube</option>
+        <option>1:1 — Social Media</option>
+      </select>
+    </div>
+
+  </div>
+
+  <button onclick="createVideo()">
+    🚀 Create My Video
+  </button>
+
+  <div id="result"></div>
+
+</section>
+
+<section class="features">
+
+  <h2>What CreateKaro AI Will Do</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="icon">🧠</div>
+      <h3>Story → Scenes</h3>
+      <p>Break your story into structured video scenes.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🎭</div>
+      <h3>Character Consistency</h3>
+      <p>Keep your characters consistent across scenes.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🎬</div>
+      <h3>AI Video</h3>
+      <p>Generate video clips from your scenes.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🎙️</div>
+      <h3>AI Voice</h3>
+      <p>Add narration and voiceovers to your videos.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  © 2026 CreateKaro AI — Your Story. Your Video. Your AI.
+</footer>
+
+<script>
+
+function createVideo(){
+
+  const story = document.getElementById("story").value;
+  const language = document.getElementById("language").value;
+  const format = document.getElementById("format").value;
+  const result = document.getElementById("result");
+
+  if(story.trim() === ""){
+    alert("Please write your story first.");
+    return;
+  }
+
+  result.style.display="block";
+
+  result.innerHTML =
+  "✨ Your video project has been created!<br><br>" +
+  "Language: " + language + "<br>" +
+  "Format: " + format + "<br><br>" +
+  "🧠 AI scene generation will be connected next.";
+
+}
+
+</script>
 
 </body>
-          </html>
+</html>
